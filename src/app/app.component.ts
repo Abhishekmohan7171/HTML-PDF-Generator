@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild,ElementRef } from '@angular/core';
+import {jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'myFirstApp';
+
+  @ViewChild('content', {static:false}) el!: ElementRef
+
+  makePdf(){
+  
+   let pdf = new jsPDF('p','pt','a4');
+   pdf.html(this.el.nativeElement,{
+   	callback: (pdf) => {
+		pdf.save("html.pdf")
+	}
+   })
+   //pdf.save();
+  }
 }
+
